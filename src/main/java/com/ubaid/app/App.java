@@ -9,8 +9,8 @@ import java.util.logging.Logger;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import com.ubaid.app.config.Config;
-import com.ubaid.app.dao.RandomlyRalatedUserDAO;
 import com.ubaid.app.service.GraphServiceV2;
+import com.ubaid.app.service.RandomlyRelatedUserService;
 import com.ubaid.entity.User;
 
 public class App
@@ -31,8 +31,8 @@ public class App
 		
 		
 		//random users
-		RandomlyRalatedUserDAO tmp1
-			= context.getBean("randomlyRelatedUserDAOImp", RandomlyRalatedUserDAO.class);
+		RandomlyRelatedUserService tmp1
+			= context.getBean("randomlyRelatedUserServiceImp", RandomlyRelatedUserService.class);
 		
 		//graph service [having addAll, deleteAll and query]
 		GraphServiceV2 gS = context.getBean("graphServiceV2Imp", GraphServiceV2.class);
@@ -50,7 +50,7 @@ public class App
 			System.out.println("Please Mention Edges for Graph");
 			edges = input.nextInt();
 			
-			User[] users = tmp1.makeRendomlyRelatedUsers(vertices, edges);
+			User[] users = tmp1.makeRandomlyRelatedUsers(vertices, edges);
 			gS.deleteAll();
 			gS.addAll(users);
 			

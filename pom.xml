@@ -80,7 +80,6 @@
 		    <groupId>org.springframework</groupId>
 		    <artifactId>spring-context-indexer</artifactId>
 		    <version>${spring.version}</version>
-		    <scope>optional</scope>
 		</dependency>
 
 		<!-- spring context support -->
@@ -196,7 +195,7 @@
 						${project.build.finalName}
 					</filename>
 
-					<appendAssemblyId>true</appendAssemblyId>
+					<appendAssemblyId>false</appendAssemblyId>
 					
 				</configuration>
 			</plugin>

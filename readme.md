@@ -4,16 +4,16 @@
 <ol>
 	<h4>Building Instruction</h4>
 	Do the following steps
-	<li><strong>git clone 'https://github.com/UbaidurRehman1/SocialNetworkNeo4j.git'</strong></li>
-	<li><strong>cd SocialNetworkNeo4j</strong></li>
+	<li><strong>git clone 'https://github.com/UbaidurRehman1/Neo4J3xBenchMark.git'</strong></li>
+	<li><strong>cd Neo4J3xBenchMark</strong></li>
 	<li><strong>mvn clean compile assembly:single</strong></li>
 	<li>cd target</li>
-	<li><strong>java -jar  SocialGraph-0.0.1-SNAPSHOT-jar-with-dependencies.jar</strong> to run the jar</li>
+	<li><strong>java -jar  Neo4JTest_1.0.jar</strong> to run the jar</li>
 </ol>
 <ol>
 	<h4>Requirements</h4>
+	<li>Neo4J Desktop App and create a local graph</li>
 	<li>Java JDK 12 (required)</li>
-	<li>dot - graphviz version 2.38.0 (20140413.2041)</li>
 	<li>Apache MAVEN 3.6.1 (required)</li>
 	<li>set JAVA_HOME variable (optional)</li>
 	<li>set MAVEN_HOME (optional)</li>
