@@ -13,4 +13,10 @@ public abstract class ServiceAOP
 	
 	@Pointcut("execution(* com.ubaid.app.dao.RandomlyRalatedUserDAO.makeRendomlyRelatedUsers(int, int))")
 	protected void makeRandomlyUser() {}
+	
+	@Pointcut("execution(* com.ubaid.app.dao.SocialGraphDAOV2.getFollowersOfItsFollowers(*)) throws RuntimeException")
+	protected void getFollowersOfFollowers() {}
+	
+	@Pointcut("execution(* com.ubaid.app.service.GraphServiceV2Imp.getFollowersOfItsFollowers(*)) throws RuntimeException")
+	protected void ffou() {}
 }

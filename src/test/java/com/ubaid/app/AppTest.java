@@ -3,6 +3,8 @@ package com.ubaid.app;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.util.Random;
+
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -92,10 +94,12 @@ class AppTest
 	void testGraph()
 	{
 
+		Random random = new Random();
 		try
 		{
-			User[] users = userService.makeRandomlyRelatedUsers(30, 30);
+			User[] users = userService.makeRandomlyRelatedUsers(200, 250);
 			graphService.addAll(users);
+			graphService.getFollowersOfItsFollowers(users[random.nextInt(20)]);
 			graphService.deleteAll();
 			
 		}

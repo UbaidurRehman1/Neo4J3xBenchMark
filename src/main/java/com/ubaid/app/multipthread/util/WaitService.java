@@ -1,15 +1,13 @@
 package com.ubaid.app.multipthread.util;
 
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service
-@Scope("prototype")
 public class WaitService implements Runnable
 {
 	
 	private String message;
-	
+	private boolean loop;
 	
 	public String getMessage() {
 		return message;
@@ -24,7 +22,7 @@ public class WaitService implements Runnable
 	@Override
 	public void run()
 	{
-		boolean loop = true;
+		loop = true;
 		
 		while(loop)
 		{
@@ -40,4 +38,10 @@ public class WaitService implements Runnable
 			}
 		}
 	}
+	
+	public void stop()
+	{
+		loop = false;
+	}
+	
 }

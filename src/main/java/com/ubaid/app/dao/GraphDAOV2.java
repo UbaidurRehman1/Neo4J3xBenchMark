@@ -1,5 +1,8 @@
 package com.ubaid.app.dao;
 
+
+import org.neo4j.ogm.model.Result;
+
 import com.ubaid.entity.User;
 
 /**
@@ -13,6 +16,10 @@ import com.ubaid.entity.User;
  */
 public interface GraphDAOV2
 {
+	
+	public static final String FOLLOWER = "follower";
+	public static final String FOLLOWER_OF_FOLLOWER = "followerOfFollower";
+
 	/**
 	 * 
 	 * @param users
@@ -28,4 +35,6 @@ public interface GraphDAOV2
 	 * @throws RuntimeException
 	 */
 	public void deleteAll() throws RuntimeException;
+	
+	public Result getFollowersOfItsFollowers(User user) throws RuntimeException;
 }

@@ -1,5 +1,8 @@
 package com.ubaid.app.service;
 
+import java.util.List;
+import java.util.Map;
+
 import com.ubaid.entity.User;
 
 /**
@@ -29,4 +32,7 @@ public interface GraphServiceV2
 	 * @throws RuntimeException
 	 */
 	public void deleteAll() throws RuntimeException;
+
+	public Map<User, List<User>> getFollowersOfItsFollowers(User user) throws RuntimeException;
+
 }

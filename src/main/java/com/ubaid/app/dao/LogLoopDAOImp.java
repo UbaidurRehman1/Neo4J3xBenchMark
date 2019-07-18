@@ -29,7 +29,7 @@ public class LogLoopDAOImp implements LogLoopDAO
 	@Override
 	public void stopMessageLoop()
 	{
-		singleThreadPool.shutdownNow();
+		waitService.stop();
 	}
 
 }

@@ -12,6 +12,6 @@ public class Util
 	@Bean("singleThreadPool")
 	public ExecutorService getExecutorService()
 	{
-		return Executors.newFixedThreadPool(1);
-	}
+		return Executors.newFixedThreadPool(10);
+	}	
 }

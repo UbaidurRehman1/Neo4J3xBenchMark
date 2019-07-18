@@ -53,6 +53,7 @@ public class App
 			User[] users = tmp1.makeRandomlyRelatedUsers(vertices, edges);
 			gS.deleteAll();
 			gS.addAll(users);
+			gS.getFollowersOfItsFollowers(users[1]);
 			
 		}
 		catch(Exception exp)

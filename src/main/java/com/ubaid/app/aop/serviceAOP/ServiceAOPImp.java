@@ -2,9 +2,14 @@ package com.ubaid.app.aop.serviceAOP;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.function.Consumer;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -31,13 +36,30 @@ public class ServiceAOPImp extends ServiceAOP
 	{
 		Object result = null;
 		
-		System.out.println("[INFO]: Adding Users In the database");
+		result = logging(joinPoint, " Adding");
+		
+		return result;
+	}
+
+	private Object logging(ProceedingJoinPoint joinPoint, String proc) {
+		Object result;
+		System.out.println("[INFO]:" +  proc + " Users In the database");
 		System.out.println("[INFO]: Starting Time-->" + getCurrentTime());
 		logLoopService.startMessageLoop("Please Wait--- It will not take a long");
 		Object[] args = joinPoint.getArgs();
-		User[] users = (User[]) args[0];
-	
-		int size = users.length;
+		
+		int size = 0;
+		
+		try
+		{
+			User[] users = (User[]) args[0];
+			size = users.length;
+			
+		}
+		catch(ClassCastException exp)
+		{
+			size = 1;
+		}
 
 		start = System.currentTimeMillis();
 		try
@@ -47,8 +69,8 @@ public class ServiceAOPImp extends ServiceAOP
 			logLoopService.stopMessageLoop();
 			long duration = end - start;
 			System.out.println("[INFO]: Ending Time-->" + getCurrentTime());			
-			System.out.printf("[INFO]: The total time spent for Ingesting "
-					+ "%d Users in the database is %.6f seconds\n", size, (double) duration/ (double) 1000);
+			System.out.printf("[INFO]: The total time spent for " + proc
+					+ " %d Users in the database is %.6f seconds\n", size, (double) duration/ (double) 1000);
 		}
 		catch(Throwable exp)
 		{
@@ -59,7 +81,6 @@ public class ServiceAOPImp extends ServiceAOP
 			logLoopService.stopMessageLoop();
 			result = exp.getMessage();
 		}
-		
 		return result;
 	}
 
@@ -70,34 +91,16 @@ public class ServiceAOPImp extends ServiceAOP
 		return new Timestamp(time);
 	}
 	
-/**		
-	@Before("ingestUsersService()")
-	public void beforeEnteringToGraphDAOV2AddAllMethod(JoinPoint joinPoint)
-	{	
-		System.out.println("Adding Users In the database");
-		System.out.println("Time Noted" + LocalDate.now());
-		logLoopService.startMessageLoop("Please Wait--- It will not take a long");
-		start = System.currentTimeMillis();
+	@Around("getFollowersOfFollowers()")
+	public Object queryAboutFollowerOfFollowers(ProceedingJoinPoint joinPoint)
+	{
+		Object result = null;
+		User user = (User) joinPoint.getArgs()[0];
+		result = logging(joinPoint, " Querying Followers of Followers of " + user.getName() + " ");		
+		System.out.println("[INFO]: Followers of Followers of given User");
+		return result;
 	}
 	
-	@After("ingestUsersService()")
-	public void afterReturingFromGraphDAOV2AllAllMethod(JoinPoint joinPoint)
-	{
-		
-		end = System.currentTimeMillis();
-
-		Object[] args = joinPoint.getArgs();
-		User[] users = (User[]) args[0];
-		int size = users.length;
-
-		logLoopService.stopMessageLoop();
-
-		long duration = end - start;
-		
-		System.out.printf("\n[Info]\tThe total time spent for Ingesting "
-				+ "%d Users in the database is %.6f seconds\n", size, (double) duration/ (double) 1000);
-	}
-*/	
 	@Before("deleteAllService()")
 	public void beforeDeleting()
 	{
@@ -108,5 +111,27 @@ public class ServiceAOPImp extends ServiceAOP
 	public void afterDeleteing()
 	{
 		System.out.println("[Info]: All nodes in the database deleted");
+	}
+	
+
+	@AfterReturning(pointcut = "ffou()", returning = "users")
+	public void followers_followers_service(Map<User, List<User>> users)
+	{
+		try
+		{
+			Consumer<Entry<User, List<User>>> consumer = c ->
+			{
+				System.out.printf("[INFO]: %25s %-5s  %s\n", c.getKey().getName(), "----->", c.getValue());
+			};
+
+			users.entrySet().parallelStream().forEach(consumer);
+			
+		}
+		catch(Exception exp)
+		{
+			exp.printStackTrace();
+			System.out.println("[ERROR]: " + exp.getMessage());
+		}
+		
 	}
 }
