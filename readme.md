@@ -6,7 +6,7 @@
 	Do the following steps
 	<li><strong>git clone 'https://github.com/UbaidurRehman1/Neo4J3xBenchMark.git'</strong></li>
 	<li><strong>cd Neo4J3xBenchMark</strong></li>
-	<li><strong>mvn clean compile assembly:single</strong></li>
+	<li><strong>mvn clean test compile assembly:single</strong></li>
 	<li>cd target</li>
 	<li><strong>java -jar  Neo4JTest_1.0.jar</strong> to run the jar</li>
 </ol>
