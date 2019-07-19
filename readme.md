@@ -1,5 +1,12 @@
 <h2 align="center">Bench Mark Using Neo4j 3X and Bolt API</h2>
 
+<ol>
+	<h4>Prerequisite</h4>
+	<li>Read out requirements</li>
+	<li>Start Neo4j Desktop App</li>
+	<li><img src="./imgs/neo4j.png" width="400px" height="400px"></img></li>
+</ol>
+
 
 <ol>
 	<h4>Building Instruction</h4>

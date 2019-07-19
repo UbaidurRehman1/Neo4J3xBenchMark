@@ -41,7 +41,7 @@ public class Simulator
 		try
 		{
 			
-			System.out.printf("\n[INFO]: The average Ingesting Time for %d users and %d relations is %.5f seconds",
+			System.out.printf("[INFO]: The average Ingesting Time for %d users and %d relations is %.5f seconds",
 					vertices, edges, json.averageIngestTime());
 
 			System.out.printf("\n[INFO]: The average Querying for Followers of Followers"
