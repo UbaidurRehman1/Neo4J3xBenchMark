@@ -83,11 +83,11 @@ public class ServiceAOPImp extends ServiceAOP
 			else if(proc.contains("Querying"))
 			{
 				System.out.printf("[INFO]: The total time spent for " + proc
-						+ "  in the database is %.6f seconds\n", size, (double) duration/ (double) 1000);				
+						+ " in the database is %.6f seconds\n", (double) duration/ (double) 1000);				
 				
 			}
 			
-			DecimalFormat myFormatter = new DecimalFormat("###.#####");
+			DecimalFormat myFormatter = new DecimalFormat("###.######");
 			String output = myFormatter.format((double) duration/ (double) 1000);
 			
 			//writeInJSONFile
