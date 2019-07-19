@@ -43,7 +43,6 @@ public class App
 			System.out.println("Please Mention Edges for Graph");
 			edges = input.nextInt();
 			simulator.simulate(vertices, edges);
-			
 		}
 		catch(Exception exp)
 		{
