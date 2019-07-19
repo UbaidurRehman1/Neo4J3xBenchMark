@@ -40,8 +40,14 @@ public class Simulator
 
 		try
 		{
-			System.out.println("The average Ingesting Time for " + vertices + " users " + " and " + edges + " relations is: " + json.averageIngestTime() + " seconds ");
-			System.out.println("The average Querying for Followers of Followers of 1 random user from " + vertices + " users " + " and " + edges + " relations is: " + json.averageQueryTime() + " seconds");			
+			
+			System.out.printf("The average Ingesting Time for %d users and %d relations is %0.5f seconds",
+					vertices, edges, json.averageIngestTime());
+
+			System.out.printf("The average Querying for Followers of Followers"
+					+ " of 1 random %s from %s users and %s relations is %0.5f seconds",
+					vertices, edges, json.averageQueryTime());
+			
 		}
 		catch(Exception exp)
 		{
