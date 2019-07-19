@@ -9,9 +9,7 @@ import java.util.logging.Logger;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import com.ubaid.app.config.Config;
-import com.ubaid.app.service.GraphServiceV2;
-import com.ubaid.app.service.RandomlyRelatedUserService;
-import com.ubaid.entity.User;
+import com.ubaid.app.simulator.Simulator;
 
 public class App
 {
@@ -25,18 +23,13 @@ public class App
 		for (Handler h : rootLogger.getHandlers())
 		    h.setLevel(Level.SEVERE);
 		
+		
 		//getting context
 		AnnotationConfigApplicationContext context = 
 				new AnnotationConfigApplicationContext(Config.class);
 		
-		
-		//random users
-		RandomlyRelatedUserService tmp1
-			= context.getBean("randomlyRelatedUserServiceImp", RandomlyRelatedUserService.class);
-		
-		//graph service [having addAll, deleteAll and query]
-		GraphServiceV2 gS = context.getBean("graphServiceV2Imp", GraphServiceV2.class);
-		
+		Simulator simulator = context.getBean(Simulator.class, "simulator");
+
 		
 		Scanner input = new Scanner(System.in);
 		int vertices = 0;
@@ -49,11 +42,7 @@ public class App
 			vertices = input.nextInt();
 			System.out.println("Please Mention Edges for Graph");
 			edges = input.nextInt();
-			
-			User[] users = tmp1.makeRandomlyRelatedUsers(vertices, edges);
-			gS.deleteAll();
-			gS.addAll(users);
-			gS.getFollowersOfItsFollowers(users[1]);
+			simulator.simulate(vertices, edges);
 			
 		}
 		catch(Exception exp)

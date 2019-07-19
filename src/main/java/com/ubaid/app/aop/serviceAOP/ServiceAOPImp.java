@@ -1,6 +1,7 @@
 package com.ubaid.app.aop.serviceAOP;
 
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,7 @@ import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.ubaid.app.service.JSONService;
 import com.ubaid.app.service.LogLoopService;
 import com.ubaid.entity.User;
 
@@ -30,6 +32,9 @@ public class ServiceAOPImp extends ServiceAOP
 	
 	@Autowired
 	private LogLoopService logLoopService;
+	
+	@Autowired
+	private JSONService json;
 	
 	@Around("ingestUsersService()")
 	public Object igestTimeLogging(ProceedingJoinPoint joinPoint)
@@ -69,8 +74,33 @@ public class ServiceAOPImp extends ServiceAOP
 			logLoopService.stopMessageLoop();
 			long duration = end - start;
 			System.out.println("[INFO]: Ending Time-->" + getCurrentTime());			
-			System.out.printf("[INFO]: The total time spent for " + proc
-					+ " %d Users in the database is %.6f seconds\n", size, (double) duration/ (double) 1000);
+
+			if(proc.contains("Adding"))
+			{
+				System.out.printf("[INFO]: The total time spent for " + proc
+						+ " %d Users in the database is %.6f seconds\n", size, (double) duration/ (double) 1000);				
+			}
+			else if(proc.contains("Querying"))
+			{
+				System.out.printf("[INFO]: The total time spent for " + proc
+						+ "  in the database is %.6f seconds\n", size, (double) duration/ (double) 1000);				
+				
+			}
+			
+			DecimalFormat myFormatter = new DecimalFormat("###.#####");
+			String output = myFormatter.format((double) duration/ (double) 1000);
+			
+			//writeInJSONFile
+			if(proc.contains("Adding"))
+			{
+				json.addIngestTime(Double.parseDouble(output));
+			}
+			else if(proc.contains("Querying"))
+			{
+				json.addQueryTime(Double.parseDouble(output));
+			}
+			
+			
 		}
 		catch(Throwable exp)
 		{
@@ -97,7 +127,8 @@ public class ServiceAOPImp extends ServiceAOP
 		Object result = null;
 		User user = (User) joinPoint.getArgs()[0];
 		result = logging(joinPoint, " Querying Followers of Followers of " + user.getName() + " ");		
-		System.out.println("[INFO]: Followers of Followers of given User");
+		System.out.println("[INFO]: Followers of Followers of given " +  user.getName());
+
 		return result;
 	}
 	
@@ -125,6 +156,7 @@ public class ServiceAOPImp extends ServiceAOP
 			};
 
 			users.entrySet().parallelStream().forEach(consumer);
+			
 			
 		}
 		catch(Exception exp)
