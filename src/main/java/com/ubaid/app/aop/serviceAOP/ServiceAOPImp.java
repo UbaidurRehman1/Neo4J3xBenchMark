@@ -156,6 +156,7 @@ public class ServiceAOPImp extends ServiceAOP
 			};
 
 			users.entrySet().parallelStream().forEach(consumer);
+			System.out.println("[INFO]:");
 			
 			
 		}
