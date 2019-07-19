@@ -38,9 +38,9 @@ public class Config
 	@Bean("jsonFile")
 	public File getJSONFile()
 	{		
-		File folder = new File(currentDir() + "\\json");
+		File folder = new File(currentDir() + "/json");
 		folder.mkdir();
-		File jsonFile = new File(currentDir() + "\\json\\stat.json");
+		File jsonFile = new File(currentDir() + "/json/stat.json");
 		try
 		{
 			if(jsonFile.exists())
